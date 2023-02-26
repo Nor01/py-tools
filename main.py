@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from video_downloader.youtube import * 
 from url_shortener.shortener import *
 from password_generator.pass_generator import *
+from images_compressor.img_compressor import *
 
 app = FastAPI()
 
@@ -34,3 +35,8 @@ def redirect_url(short_url: int):
 @app.post("/password", tags=["Password Generator"])
 async def password(request: PasswordGeneratorRequest):
     return generate_password(request)
+
+@app.post("/compress", tags=["Images Compressor"])
+async def compress_endpoint(file: UploadFile = File(...)):
+    result = compress_image(file)
+    return result
