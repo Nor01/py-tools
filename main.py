@@ -3,6 +3,7 @@ from video_downloader.youtube import *
 from url_shortener.shortener import *
 from password_generator.pass_generator import *
 from images_compressor.img_compressor import *
+from file_mover.file_mover import *
 
 app = FastAPI()
 
@@ -40,3 +41,8 @@ async def password(request: PasswordGeneratorRequest):
 async def compress_endpoint(file: UploadFile = File(...)):
     result = compress_image(file)
     return result
+
+@app.post("/move_files", tags=["File Mover"])
+async def move_files_endpoint():
+    move_files()
+    return {"message": "Files moved successfully!"}
