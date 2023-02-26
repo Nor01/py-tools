@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from video_downloader.youtube import * 
 from url_shortener.shortener import *
+from password_generator.pass_generator import *
 
 app = FastAPI()
 
@@ -29,3 +30,7 @@ def redirect_url(short_url: int):
         return redirect(short_url)
     except NotFoundUrl:
         return {"message": "Short URL not found"}
+    
+@app.post("/password", tags=["Password Generator"])
+async def password(request: PasswordGeneratorRequest):
+    return generate_password(request)
