@@ -11,15 +11,20 @@ app = FastAPI()
 def root():
     return {"ping": "pong"}
 
-@app.post("/download-single", tags=["Video Downloader"])
+@app.post("/download-single", tags=["Youtube"])
 async def download_single(url: str):
     video_request = VideoRequest(url=url)
     response = download_single_video(video_request)
     return response
 
-@app.post("/download-multiples", tags=["Video Downloader"])
+@app.post("/download-multiples", tags=["Youtube"])
 async def download_multiple(video_request: MultipleVideoRequest):
     response = download_multiples_videos(video_request)
+    return response
+
+@app.post("/download-playlist", tags=["Youtube"])
+async def download_playlist_handler(playlist_request: PlaylistRequest):
+    response = await download_playlist(playlist_request)
     return response
 
 @app.post("/shorten", tags=["Url Shortener"])
